@@ -27,4 +27,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'tasks'], function () {
     Route::get('{task}/edit', 'TaskController@edit')->name('tasks.edit');
     Route::patch('{task}', 'TaskController@update')->name('tasks.update');
     Route::delete('{task}', 'TaskController@destroy')->name('tasks.delete');
+
+    Route::get('{task}/new-entry', 'TasksEntriesController@create')->name('entry.create');
+    Route::post('{task}/new-entry', 'TasksEntriesController@store')->name('entry.store');
 });

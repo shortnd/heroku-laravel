@@ -40,6 +40,7 @@ class TaskController extends Controller
 
     public function show(Task $task)
     {
+        $task->entries = $task->entries()->get();
         return view('tasks.show')->withTask($task);
     }
 
