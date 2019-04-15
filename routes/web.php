@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route('tasks.index'));
 });
 
 Auth::routes();
@@ -30,4 +30,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'tasks'], function () {
 
     Route::get('{task}/new-entry', 'TasksEntriesController@create')->name('entry.create');
     Route::post('{task}/new-entry', 'TasksEntriesController@store')->name('entry.store');
+
+    // Route::group(['prefix' => 'inertia'], function () {
+    //     Route::get('', 'TaskInertiaController@index');
+    // });
 });
