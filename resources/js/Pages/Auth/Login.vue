@@ -6,6 +6,13 @@
                     <div class="card">
                         <div class="card-header">Login</div>
                         <div class="card-body">
+                            <div v-if="hasErrors" class="alert alert-danger">
+                                <ul>
+                                    <li v-for="(er, index) in getErrors" :key="index">
+                                        {{ er[0] }}
+                                    </li>
+                                </ul>
+                            </div>
                             <form @submit.prevent="handleLogin">
                                 <div class="form-group row">
                                     <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address:</label>
@@ -57,6 +64,7 @@ export default {
             email: null,
             password: null,
             remember: false,
+            errors: null,
         }
     },
     components: {
@@ -71,7 +79,19 @@ export default {
                 remember: this.remember
             }).then((response) => {
                 Inertia.visit(`${response.request.responseURL}`)
-            }).catch((res) => console.error(res) )
+            }).catch(({response, errors}) => {
+                if (response.status === 422) {
+                    this.errors =  response.data.errors
+                }
+            })
+        }
+    },
+    computed: {
+        hasErrors() {
+            return !!this.errors
+        },
+        getErrors() {
+            return this.errors
         }
     }
 }
