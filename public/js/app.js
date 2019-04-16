@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "js/" + ({}[chunkId]||chunkId) + "." + {"0":"01beeb56ed82710a98b5","1":"452e194732a5e7aa121f","2":"e24fa399c4523f438f61","3":"9865b0be91a0b76ca38b"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "js/" + ({}[chunkId]||chunkId) + "." + {"1":"452e194732a5e7aa121f","2":"e48115285ad729469317","3":"5e52f75df6cfb2f9ec6b","4":"3831beba8c9c98a3e6dd","5":"95398952c130f4b3256a","6":"e47be1ce3f8d92c88400","7":"418335d37efb55128ea3","8":"65d2622201fd4fdc6e44"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -46515,33 +46515,73 @@ module.exports = function(module) {
 var map = {
 	"./Auth/Login": [
 		"./resources/js/Pages/Auth/Login.vue",
-		0,
+		5,
 		1
 	],
 	"./Auth/Login.vue": [
 		"./resources/js/Pages/Auth/Login.vue",
-		0,
+		5,
 		1
+	],
+	"./Auth/Register": [
+		"./resources/js/Pages/Auth/Register.vue",
+		5,
+		2
+	],
+	"./Auth/Register.vue": [
+		"./resources/js/Pages/Auth/Register.vue",
+		5,
+		2
 	],
 	"./Home": [
 		"./resources/js/Pages/Home.vue",
-		0,
-		2
+		5,
+		3
 	],
 	"./Home.vue": [
 		"./resources/js/Pages/Home.vue",
-		0,
-		2
+		5,
+		3
+	],
+	"./Tasks/Create": [
+		"./resources/js/Pages/Tasks/Create.vue",
+		5,
+		7
+	],
+	"./Tasks/Create.vue": [
+		"./resources/js/Pages/Tasks/Create.vue",
+		5,
+		7
+	],
+	"./Tasks/Index": [
+		"./resources/js/Pages/Tasks/Index.vue",
+		5,
+		6
+	],
+	"./Tasks/Index.vue": [
+		"./resources/js/Pages/Tasks/Index.vue",
+		5,
+		6
+	],
+	"./Tasks/Show": [
+		"./resources/js/Pages/Tasks/Show.vue",
+		5,
+		8
+	],
+	"./Tasks/Show.vue": [
+		"./resources/js/Pages/Tasks/Show.vue",
+		5,
+		8
 	],
 	"./Welcome": [
 		"./resources/js/Pages/Welcome.vue",
-		0,
-		3
+		5,
+		4
 	],
 	"./Welcome.vue": [
 		"./resources/js/Pages/Welcome.vue",
-		0,
-		3
+		5,
+		4
 	]
 };
 function webpackAsyncContext(req) {
