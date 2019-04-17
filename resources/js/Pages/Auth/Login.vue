@@ -73,6 +73,7 @@ export default {
     },
     methods: {
         handleLogin() {
+            this.errors = null
             axios.post('/login', {
                 email: this.email,
                 password: this.password,
