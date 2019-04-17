@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "js/" + ({}[chunkId]||chunkId) + "." + {"0":"4e3ed936473fb4b0e010","1":"3361e5433e89110e0f65","2":"c3342e99775c1f27634b","3":"89a872cda12855daed4c","4":"742dc6570e7f019afa5d","5":"0da173853fc0f7b86ba0","6":"4141c70dabd4b3854851","7":"73a6a46f66b98ecafb50"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "js/" + ({}[chunkId]||chunkId) + "." + {"1":"3361e5433e89110e0f65","2":"c3342e99775c1f27634b","3":"89a872cda12855daed4c","4":"742dc6570e7f019afa5d","5":"0da173853fc0f7b86ba0","6":"d61920f6594451102515","7":"73a6a46f66b98ecafb50","8":"3d9eca45becc3471a393","9":"d730bca42f4221c40c6f"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -46493,72 +46493,82 @@ module.exports = function(module) {
 var map = {
 	"./Auth/Login": [
 		"./resources/js/Pages/Auth/Login.vue",
-		0,
+		8,
 		1
 	],
 	"./Auth/Login.vue": [
 		"./resources/js/Pages/Auth/Login.vue",
-		0,
+		8,
 		1
 	],
 	"./Auth/Register": [
 		"./resources/js/Pages/Auth/Register.vue",
-		0,
+		8,
 		2
 	],
 	"./Auth/Register.vue": [
 		"./resources/js/Pages/Auth/Register.vue",
-		0,
+		8,
 		2
 	],
 	"./Home": [
 		"./resources/js/Pages/Home.vue",
-		0,
+		8,
 		3
 	],
 	"./Home.vue": [
 		"./resources/js/Pages/Home.vue",
-		0,
+		8,
 		3
 	],
 	"./Tasks/Create": [
 		"./resources/js/Pages/Tasks/Create.vue",
-		0,
+		8,
 		4
 	],
 	"./Tasks/Create.vue": [
 		"./resources/js/Pages/Tasks/Create.vue",
-		0,
+		8,
 		4
+	],
+	"./Tasks/Entry/Create": [
+		"./resources/js/Pages/Tasks/Entry/Create.vue",
+		8,
+		9
+	],
+	"./Tasks/Entry/Create.vue": [
+		"./resources/js/Pages/Tasks/Entry/Create.vue",
+		8,
+		9
 	],
 	"./Tasks/Index": [
 		"./resources/js/Pages/Tasks/Index.vue",
-		0,
+		8,
 		5
 	],
 	"./Tasks/Index.vue": [
 		"./resources/js/Pages/Tasks/Index.vue",
-		0,
+		8,
 		5
 	],
 	"./Tasks/Show": [
 		"./resources/js/Pages/Tasks/Show.vue",
-		0,
+		8,
 		6
 	],
 	"./Tasks/Show.vue": [
 		"./resources/js/Pages/Tasks/Show.vue",
-		0,
+		8,
 		6
 	],
 	"./Welcome": [
 		"./resources/js/Pages/Welcome.vue",
-		0,
+		8,
 		7
 	],
 	"./Welcome.vue": [
 		"./resources/js/Pages/Welcome.vue",
-		0,
+		8,
 		7
 	]
 };

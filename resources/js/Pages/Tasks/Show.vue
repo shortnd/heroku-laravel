@@ -11,7 +11,7 @@
                 <div class="col-md-12">
                     <ul>
                         <li v-for="entry in entries" :key="entry.id">
-                            {{ entry.body }}
+                            {{ entry.body }} - <a href="#" class="btn-link" @click.prevent="deleteEntry(entry.id)">delete</a>
                         </li>
                     </ul>
                     <nav>
@@ -25,12 +25,23 @@
 
 <script>
 import Layout from '@/Shared/Layout'
-import { InertiaLink } from 'inertia-vue'
+import { InertiaLink, Inertia } from 'inertia-vue'
+import axios from 'axios'
+
 export default {
     props: ['task', 'entries'],
     components: {
         Layout,
         InertiaLink,
+    },
+    methods: {
+        deleteEntry(id) {
+            axios.delete(`/tasks/${this.task.id}/${id}`)
+                .then(({ request }) => {
+                    Inertia.replace(`/tasks/${this.task.id}`,
+                    {preserveScroll: true})
+                }).catch(({ response }) => console.log(response))
+        }
     }
 }
 </script>

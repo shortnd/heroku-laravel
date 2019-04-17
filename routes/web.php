@@ -31,6 +31,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'tasks'], function () {
     Route::get('{task}/new-entry', 'TasksEntriesController@create')->name('entry.create');
     Route::post('{task}/new-entry', 'TasksEntriesController@store')->name('entry.store');
 
+    Route::delete('{task}/{entry}', 'TasksEntriesController@delete')->name('entry.delete');
+
     // Route::group(['prefix' => 'inertia'], function () {
     //     Route::get('', 'TaskInertiaController@index');
     // });

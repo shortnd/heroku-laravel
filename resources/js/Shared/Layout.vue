@@ -63,8 +63,11 @@ export default {
     methods: {
         logout() {
             axios.post('/logout')
-            .then(() => Inertia.visit('/'))
-            .catch((e) => console.error(e))
+                .then((response) => {
+                    if (response.status === 401) {
+                        Inertia.replace('/login')
+                    }
+                })
         }
     },
     computed: {
