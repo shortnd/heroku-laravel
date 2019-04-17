@@ -62,12 +62,7 @@ export default {
     components: { InertiaLink },
     methods: {
         logout() {
-            axios.post('/logout')
-                .then((response) => {
-                    if (response.status === 401) {
-                        Inertia.replace('/login')
-                    }
-                })
+            Inertia.post('/logout')
         }
     },
     computed: {
