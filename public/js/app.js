@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "js/" + ({}[chunkId]||chunkId) + "." + {"1":"452e194732a5e7aa121f","2":"e48115285ad729469317","3":"5e52f75df6cfb2f9ec6b","4":"3831beba8c9c98a3e6dd","5":"95398952c130f4b3256a","6":"e47be1ce3f8d92c88400","7":"418335d37efb55128ea3","8":"65d2622201fd4fdc6e44"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "js/" + ({}[chunkId]||chunkId) + "." + {"0":"4e3ed936473fb4b0e010","1":"3361e5433e89110e0f65","2":"c3342e99775c1f27634b","3":"89a872cda12855daed4c","4":"742dc6570e7f019afa5d","5":"0da173853fc0f7b86ba0","6":"4141c70dabd4b3854851","7":"73a6a46f66b98ecafb50"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -6337,19 +6337,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   data() {
     return {
-      page: {
-        instance: null,
-        props: null,
-      }
+      page: inertia__WEBPACK_IMPORTED_MODULE_0__["default"].page
     }
   },
   created() {
-    inertia__WEBPACK_IMPORTED_MODULE_0__["default"].init(this.component, this.props, (component, props) => {
-      return Promise.resolve(this.resolveComponent(component)).then(instance => {
-        this.page.instance = instance
-        this.page.props = props
-      })
-    })
+    inertia__WEBPACK_IMPORTED_MODULE_0__["default"].init(this.component, this.props, this.resolveComponent)
   },
   render(h) {
     if (this.page.instance) {
@@ -6405,28 +6397,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     href: String,
-    method: {
-      type: String,
-      default: 'get',
-    },
-    replace: {
-      type: Boolean,
-      default: false,
-    },
-    preserveScroll: {
-      type: Boolean,
-      default: false,
-    },
+    replace: Boolean,
+    preserveScroll: Boolean,
   },
   methods: {
     visit(event) {
       if (Object(inertia__WEBPACK_IMPORTED_MODULE_0__["shouldIntercept"])(event)) {
         event.preventDefault()
-        inertia__WEBPACK_IMPORTED_MODULE_0__["default"].visit(this.href, {
-          method: this.method,
-          replace: this.replace,
-          preserveScroll: this.preserveScroll,
-        })
+        inertia__WEBPACK_IMPORTED_MODULE_0__["default"].visit(this.href, { replace: this.replace, preserveScroll: this.preserveScroll })
       }
     },
   },
@@ -6484,32 +6462,42 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  setPage: null,
+  resolveComponent: null,
   cancelToken: null,
   progressBar: null,
+  firstPage: null,
   modal: null,
-
-  init(component, props, setPage) {
-    this.setPage = setPage
-
-    if (window.history.state && this.navigationType() === 'back_forward') {
-      this.setPage(window.history.state.component, window.history.state.props)
-    } else {
-      this.setPage(component, props)
-      this.setState(true, window.location.pathname + window.location.search, {
-        component: component,
-        props: props,
-      })
-    }
-
-    window.addEventListener('popstate', this.restore.bind(this))
-    document.addEventListener('keydown', this.hideModalOnEscape.bind(this))
+  page: {
+    component: null,
+    props: null,
+    instance: null,
   },
 
-  navigationType() {
-    if (window.performance) {
-      return window.performance.getEntriesByType('navigation')[0].type
+  init(component, props, resolveComponent) {
+    this.resolveComponent = resolveComponent
+    this.setPage(component, props).then(() => this.setScroll('restore'))
+
+    window.history.scrollRestoration = 'manual'
+    window.addEventListener('popstate', this.restore.bind(this))
+    document.addEventListener('keydown', this.hideModalOnEscape.bind(this))
+    document.addEventListener('scroll', this.saveScrollPosition.bind(this))
+  },
+
+  getHttp() {
+    if (this.cancelToken) {
+      this.cancelToken.cancel(this.cancelToken)
     }
+
+    this.cancelToken = axios__WEBPACK_IMPORTED_MODULE_0___default.a.CancelToken.source()
+
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
+      cancelToken: this.cancelToken.token,
+      headers: {
+        'Accept': 'text/html, application/xhtml+xml',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-Inertia': true,
+      },
+    })
   },
 
   isInertiaResponse(response) {
@@ -6517,7 +6505,7 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   showProgressBar() {
-    this.progressBar = setTimeout(() => nprogress__WEBPACK_IMPORTED_MODULE_1___default.a.start(), 100)
+    this.progressBar = setTimeout(() => nprogress__WEBPACK_IMPORTED_MODULE_1___default.a.start(), 250)
   },
 
   hideProgressBar() {
@@ -6525,27 +6513,11 @@ __webpack_require__.r(__webpack_exports__);
     clearInterval(this.progressBar)
   },
 
-  visit(url, { method = 'get', data = {}, replace = false, preserveScroll = false } = {}) {
+  load(url) {
     this.hideModal()
     this.showProgressBar()
 
-    if (this.cancelToken) {
-      this.cancelToken.cancel(this.cancelToken)
-    }
-
-    this.cancelToken = axios__WEBPACK_IMPORTED_MODULE_0___default.a.CancelToken.source()
-
-    return axios__WEBPACK_IMPORTED_MODULE_0___default()({
-      method: method,
-      url: url,
-      data: data,
-      cancelToken: this.cancelToken.token,
-      headers: {
-        'Accept': 'text/html, application/xhtml+xml',
-        'X-Requested-With': 'XMLHttpRequest',
-        'X-Inertia': true,
-      },
-    }).then(response => {
+    return this.getHttp().get(url).then(response => {
       if (this.isInertiaResponse(response)) {
         return response.data
       } else {
@@ -6562,62 +6534,68 @@ __webpack_require__.r(__webpack_exports__);
         return Promise.reject(error)
       }
     }).then(page => {
-      if (page) {
-        this.setState(replace || page.url === window.location.pathname + window.location.search, page.url, {
-          component: page.component,
-          props: page.props,
-        })
-
-        this.setPage(page.component, page.props)
-          .then(() => {
-            this.setScroll(preserveScroll)
-            this.hideProgressBar()
-          })
-      }
+      this.hideProgressBar()
+      return page
     })
   },
 
-  setState(replace = false, url, data = {}) {
-    window.history[replace ? 'replaceState' : 'pushState'](data, '', url)
+  setPage(component, props) {
+    return Promise.resolve(this.resolveComponent(component)).then(instance => {
+      this.firstPage = this.firstPage === null
+      this.page.component = component
+      this.page.props = props
+      this.page.instance = instance
+    })
   },
 
-  setScroll(preserveScroll) {
-    if (!preserveScroll) {
+  setState(replace = false, url) {
+    window.history[replace ? 'replaceState' : 'pushState']({ scrollPosition: this.getScrollPosition() }, '', url)
+  },
+
+  setScroll(action) {
+    if (action === 'restore' && window.history.state) {
+      window.scrollTo(window.history.state.scrollPosition.x, window.history.state.scrollPosition.y)
+    } else if (action === 'top') {
       window.scrollTo(0, 0)
     }
   },
 
-  replace(url, options = {}) {
-    return this.visit(url, { replace: true, ...options })
+  first() {
+    return this.firstPage
   },
 
-  post(url, data = {}, options = {}) {
-    return this.visit(url, { method: 'post', data, ...options })
-  },
-
-  put(url, data = {}, options = {}) {
-    return this.visit(url, { method: 'put', data, ...options })
-  },
-
-  patch(url, data = {}, options = {}) {
-    return this.visit(url, { method: 'patch', data, ...options })
-  },
-
-  delete(url, options = {}) {
-    return this.visit(url, { method: 'delete', ...options })
-  },
-
-  restore(event) {
-    if (event.state) {
-      this.setPage(event.state.component, event.state.props)
-    }
-  },
-
-  cache(key, props) {
-    this.setState(true, window.location.pathname + window.location.search, {
-      component: window.history.state.component,
-      props: { ...window.history.state.props, [key]: props },
+  visit(url, { replace = false, preserveScroll = false } = {}) {
+    return this.load(url).then(page => {
+      if (page) {
+        this.setState(replace, page.url)
+        this.setPage(page.component, page.props)
+          .then(() => this.setScroll(preserveScroll ? 'preserve' : 'top'))
+      }
     })
+  },
+
+  replace(url, { preserveScroll = false } = {}) {
+    return this.visit(url, { replace: true, preserveScroll })
+  },
+
+  restore() {
+    this.load(window.location.href).then(page => {
+      if (page) {
+        this.setPage(page.component, page.props)
+          .then(() => this.setScroll('restore'))
+      }
+    })
+  },
+
+  saveScrollPosition() {
+    this.setState(true, window.location.pathname + window.location.search)
+  },
+
+  getScrollPosition() {
+    return {
+      x: window.pageXOffset,
+      y: window.pageYOffset,
+    }
   },
 
   showModal(html) {
@@ -46515,73 +46493,73 @@ module.exports = function(module) {
 var map = {
 	"./Auth/Login": [
 		"./resources/js/Pages/Auth/Login.vue",
-		5,
+		0,
 		1
 	],
 	"./Auth/Login.vue": [
 		"./resources/js/Pages/Auth/Login.vue",
-		5,
+		0,
 		1
 	],
 	"./Auth/Register": [
 		"./resources/js/Pages/Auth/Register.vue",
-		5,
+		0,
 		2
 	],
 	"./Auth/Register.vue": [
 		"./resources/js/Pages/Auth/Register.vue",
-		5,
+		0,
 		2
 	],
 	"./Home": [
 		"./resources/js/Pages/Home.vue",
-		5,
+		0,
 		3
 	],
 	"./Home.vue": [
 		"./resources/js/Pages/Home.vue",
-		5,
+		0,
 		3
 	],
 	"./Tasks/Create": [
 		"./resources/js/Pages/Tasks/Create.vue",
-		5,
-		7
+		0,
+		4
 	],
 	"./Tasks/Create.vue": [
 		"./resources/js/Pages/Tasks/Create.vue",
-		5,
-		7
+		0,
+		4
 	],
 	"./Tasks/Index": [
 		"./resources/js/Pages/Tasks/Index.vue",
-		5,
-		6
+		0,
+		5
 	],
 	"./Tasks/Index.vue": [
 		"./resources/js/Pages/Tasks/Index.vue",
-		5,
-		6
+		0,
+		5
 	],
 	"./Tasks/Show": [
 		"./resources/js/Pages/Tasks/Show.vue",
-		5,
-		8
+		0,
+		6
 	],
 	"./Tasks/Show.vue": [
 		"./resources/js/Pages/Tasks/Show.vue",
-		5,
-		8
+		0,
+		6
 	],
 	"./Welcome": [
 		"./resources/js/Pages/Welcome.vue",
-		5,
-		4
+		0,
+		7
 	],
 	"./Welcome.vue": [
 		"./resources/js/Pages/Welcome.vue",
-		5,
-		4
+		0,
+		7
 	]
 };
 function webpackAsyncContext(req) {
@@ -46700,8 +46678,8 @@ try {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/collin/code/laravel/heroku-laravel/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/collin/code/laravel/heroku-laravel/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/kortr/code/laravel/hello_laravel_heroku/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/kortr/code/laravel/hello_laravel_heroku/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

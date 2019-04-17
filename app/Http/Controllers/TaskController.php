@@ -43,9 +43,10 @@ class TaskController extends Controller
 
     public function show(Task $task)
     {
-        // $task->entries = $task->entries()->get();
         // return view('tasks.show')->withTask($task);
-        return Inertia::render('Tasks/Show', ['task' => $task]);
+        $entries = $task->entries()->get();
+
+        return Inertia::render('Tasks/Show', ['task' => $task, 'entries' => $entries]);
     }
 
     public function edit(Task $task)
