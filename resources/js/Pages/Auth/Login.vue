@@ -18,7 +18,7 @@
                                     <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address:</label>
 
                                     <div class="col-md-6">
-                                        <input type="email" v-model="email" id="email" required autofocus class="form-control">
+                                        <input type="email" v-model="form.email" id="email" required autofocus class="form-control">
                                     </div>
                                 </div><!--/.form-group-->
 
@@ -26,13 +26,13 @@
                                     <label for="password" class="col-md-4 text-md-right">Password:</label>
 
                                     <div class="col-md-6">
-                                        <input type="password" v-model="password" id="password" class="form-control" required>
+                                        <input type="password" v-model="form.password" id="password" class="form-control" required>
                                     </div>
                                 </div><!--/.form-group-->
 
                                 <div class="form-group row">
                                     <div class="col-md-6 offset-md-4">
-                                        <input type="checkbox" v-model="remember" id="remember" class="form-check-input">
+                                        <input type="checkbox" v-model="form.remember" id="remember" class="form-check-input">
 
                                         <label class="form-check-label" for="remember">Remember Me</label>
                                     </div>
@@ -61,9 +61,11 @@ import { InertiaLink, Inertia } from 'inertia-vue'
 export default {
     data() {
         return {
-            email: null,
-            password: null,
-            remember: false,
+            form: {
+                email: null,
+                password: null,
+                remember: false,
+            },
             errors: null,
         }
     },
@@ -74,11 +76,8 @@ export default {
     methods: {
         handleLogin() {
             this.errors = null
-            axios.post('/login', {
-                email: this.email,
-                password: this.password,
-                remember: this.remember
-            }).then((response) => {
+            axios.post('/login', this.form)
+            .then((response) => {
                 Inertia.visit(`${response.request.responseURL}`)
             }).catch(({response, errors}) => {
                 if (response.status === 422) {
@@ -93,7 +92,7 @@ export default {
         },
         getErrors() {
             return this.errors
-        }
+        },
     }
 }
 </script>

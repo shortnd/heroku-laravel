@@ -16,7 +16,7 @@
 
 <body>
 
-    <div id="app" data-component="{{ $component }}" data-props="{{ json_encode((object) $props) }}"></div>
+    <div id="app" data-page="{{ json_encode($page) }}"></div>
 
 </body>
 
