@@ -13,13 +13,11 @@ class TaskController extends Controller
     {
         $tasks = Auth::user()->tasks()->get();
 
-        // return view('tasks/index')->withTasks($tasks);
         return Inertia::render('Tasks/Index', ['tasks' => $tasks]);
     }
 
     public function create()
     {
-        // return view('tasks/create');
         return Inertia::render('Tasks/Create');
     }
 
@@ -43,7 +41,6 @@ class TaskController extends Controller
 
     public function show(Task $task)
     {
-        // return view('tasks.show')->withTask($task);
         $entries = $task->entries()->get();
 
         return Inertia::render('Tasks/Show', ['task' => $task, 'entries' => $entries]);
