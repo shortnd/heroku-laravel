@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-        "inertia-vue": "github:inertiajs/inertia-vue"
+        "inertia-vue": "github:inertiajs/inertia-vue",
+        "vue-meta": "^1.6.0"
     }
 }

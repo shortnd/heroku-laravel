@@ -8,8 +8,11 @@ require('./bootstrap');
 
 import Inertia from 'inertia-vue'
 import Vue from 'vue'
+import Meta from 'vue-meta'
 
 let app = document.getElementById('app')
+
+Vue.use(Meta);
 
 new Vue({
     render: h => h(Inertia, {

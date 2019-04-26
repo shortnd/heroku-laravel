@@ -59,6 +59,9 @@ import axios from 'axios'
 import Layout from '@/Shared/Layout'
 import { InertiaLink, Inertia } from 'inertia-vue'
 export default {
+    metaInfo: {
+        title: 'Login',
+    },
     data() {
         return {
             form: {
