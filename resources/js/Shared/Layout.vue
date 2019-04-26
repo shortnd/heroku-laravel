@@ -50,7 +50,10 @@
         </nav><!--/.navbar.navbar-expand-md.navbar-light.navbar-laravel-->
         <main class="py-4">
             <div class="container">
-                <div v-if="hasErrors" class="alert alert-danger">
+                <div v-if="hasErrors" class="alert alert-danger alert-dismissible fade show">
+                    <button type="button" @click="emptyError" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                     <ul>
                         <li v-for="(error, index) in page.props.errors" :key="index">
                             {{error}}
@@ -69,7 +72,11 @@ import { Inertia, InertiaLink } from 'inertia-vue'
 export default {
     inject: ['page'],
     components: { InertiaLink },
-    methods: {},
+    methods: {
+        emptyError() {
+            Inertia.reload()
+        },
+    },
     computed: {
         guest() {
             return this.page.props.auth.user === null
