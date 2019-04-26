@@ -57,6 +57,7 @@
 <script>
 import Layout from '@/Shared/Layout'
 import axios from 'axios'
+import { Inertia } from 'inertia-vue'
 
 export default {
     components: {
@@ -75,14 +76,11 @@ export default {
     },
     methods: {
         register() {
-            axios.post('/register', this.form)
-                .then(({ response }) => {
-                    console.log(response)
-                }).catch(({ response }) => {
-                    if (response.status === 422) {
-                        this.errors = response.data.errors
-                    }
-                })
+            Inertia.post('/register', this.form).then(() => {
+                this.form.email = null
+                this.form.password = null
+                this.form.password_confirmation = null
+            })
         }
     },
     computed: {

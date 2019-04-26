@@ -76,15 +76,6 @@ export default {
     methods: {
         handleLogin() {
             Inertia.post('/login', this.form)
-            // this.errors = null
-            // axios.post('/login', this.form)
-            // .then((response) => {
-            //     Inertia.visit(`${response.request.responseURL}`)
-            // }).catch(({response, errors}) => {
-            //     if (response.status === 422) {
-            //         this.errors =  response.data.errors
-            //     }
-            // })
         }
     },
     computed: {
