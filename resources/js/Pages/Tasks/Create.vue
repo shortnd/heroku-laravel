@@ -25,6 +25,9 @@ import { Inertia } from 'inertia-vue'
 
 export default {
     props: ['errors'],
+    metaInfo: {
+        title: 'Create new Task'
+    },
     data() {
         return {
             form : {

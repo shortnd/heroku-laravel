@@ -18,6 +18,9 @@ import Layout from '@/Shared/Layout'
 import { InertiaLink } from 'inertia-vue'
 export default {
     props: ['tasks'],
+    metaInfo: {
+        title: 'All Tasks'
+    },
     components: {
         Layout,
         InertiaLink

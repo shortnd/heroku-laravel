@@ -30,6 +30,9 @@ import axios from 'axios'
 
 export default {
     props: ['task', 'entries'],
+    metaInfo: {
+        title: 'Task'
+    },
     components: {
         Layout,
         InertiaLink,
@@ -42,6 +45,9 @@ export default {
                     {preserveScroll: true})
                 }).catch(({ response }) => console.log(response))
         }
+    },
+    computed: {
+
     }
 }
 </script>

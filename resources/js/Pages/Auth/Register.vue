@@ -63,6 +63,9 @@ export default {
     components: {
         Layout
     },
+    meta: {
+        title: 'Register'
+    },
     data() {
         return {
             form: {
