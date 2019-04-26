@@ -39,7 +39,8 @@
                                         {{ page.props.auth.user.name }} <span class="caret"></span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" @click.prevent="logout">Logout</a>
+                                        <!-- <a class="dropdown-item" @click.prevent="logout">Logout</a> -->
+                                        <inertia-link class="dropdown-item" method="POST" href="/logout">Logout</inertia-link>
                                     </div>
                                 </li>
                             </template>
@@ -47,8 +48,16 @@
                     </div><!--/.collapse.navbar-collapse-->
             </div>
         </nav><!--/.navbar.navbar-expand-md.navbar-light.navbar-laravel-->
-
         <main class="py-4">
+            <div class="container">
+                <div v-if="hasErrors" class="alert alert-danger">
+                    <ul>
+                        <li v-for="(error, index) in page.props.errors" :key="index">
+                            {{error}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <slot/>
         </main>
     </div>
@@ -56,18 +65,17 @@
 
 <script>
 import axios from 'axios'
-import { InertiaLink, Inertia } from 'inertia-vue'
+import { Inertia, InertiaLink } from 'inertia-vue'
 export default {
     inject: ['page'],
     components: { InertiaLink },
-    methods: {
-        logout() {
-            Inertia.post('/logout')
-        }
-    },
+    methods: {},
     computed: {
         guest() {
             return this.page.props.auth.user === null
+        },
+        hasErrors() {
+            return this.page.props.errors != null;
         }
     }
 }

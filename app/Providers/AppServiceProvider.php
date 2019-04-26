@@ -30,6 +30,12 @@ class AppServiceProvider extends ServiceProvider
     {
         Inertia::share('app.name', Config::get('app.name'));
 
+        Inertia::share('errors', function () {
+            if (Session::has('errors')) {
+                return Session::get('errors')->all();
+            }
+        });
+
         Inertia::share('auth.user', function () {
             if (Auth::user()) {
                 return [
