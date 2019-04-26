@@ -1,13 +1,6 @@
 <template>
     <layout>
         <div class="container">
-            <div v-if="errors" class="alert alert-danger">
-                <ul>
-                    <li v-for="(error, index ) in errors" :key="index">
-                        {{ error[0] }}
-                    </li>
-                </ul>
-            </div>
             <form @submit.prevent="createTask">
                 <div class="form-group">
                     <label for="title">Title</label>
@@ -31,13 +24,13 @@ import axios from 'axios'
 import { Inertia } from 'inertia-vue'
 
 export default {
+    props: ['errors'],
     data() {
         return {
             form : {
                 title: null,
                 body: null
             },
-            errors: null
         }
     },
     components: {
@@ -45,13 +38,7 @@ export default {
     },
     methods: {
         createTask() {
-            axios.post('/tasks', this.form)
-            .then(() => Inertia.visit('/tasks'))
-            .catch(({ response }) => {
-                if (response.status === 422) {
-                    this.errors = response.data.errors
-                }
-            })
+            Inertia.post('/tasks', this.form)
         }
     }
 }

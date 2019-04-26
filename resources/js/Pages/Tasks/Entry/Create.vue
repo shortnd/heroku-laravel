@@ -2,13 +2,6 @@
     <layout>
         <div class="container">
             <h2>New Entry</h2>
-            <div v-if="errors" class="alert alert-danger">
-                <ul>
-                    <li v-for="(e, index) in errors" :key="index">
-                        {{ e[0] }}
-                    </li>
-                </ul>
-            </div>
             <form>
                 <div class="form-group">
                     <label for="body">Body</label>
@@ -25,12 +18,11 @@
 <script>
 import Layout from '@/Shared/Layout';
 import axios from 'axios';
-import {Inertia} from 'inertia-vue';
+import { Inertia } from 'inertia-vue';
 export default {
     props: ['task'],
     data() {
         return {
-            errors: null,
             form: {
                 body: null,
             }
@@ -42,16 +34,8 @@ export default {
     },
     methods: {
         addEntry() {
-            axios.post(`/tasks/${this.task.id}/new-entry`, this.form)
-            .then(({ request }) => {
-                Inertia.visit(request.responseURL)
-            })
-            .catch(({response}) => {
-                if (response.status === 422) {
-                    this.errors = response.data.errors
-                }
-            })
-        }
+            Inertia.post(`/tasks/${this.task.id}/new-entry`, this.form)
+        },
     }
 }
 </script>
