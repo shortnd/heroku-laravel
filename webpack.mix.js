@@ -20,4 +20,4 @@ mix.sass('resources/sass/app.scss', 'public/css').js('resources/js/app.js', 'pub
             '@': path.resolve('resources/js'),
         },
     },
-})
+}).browserSync('heroku-laravel.test');

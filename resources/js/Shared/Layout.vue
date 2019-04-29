@@ -27,7 +27,7 @@
                                     <inertia-link href="/login" class="nav-link">Login</inertia-link>
                                 </li>
                                 <li class="nav-item">
-                                    <inertia-link href="/register" class="nav-link">register</inertia-link>
+                                    <inertia-link href="/register" class="nav-link">Register</inertia-link>
                                 </li>
                             </template>
                             <template v-else>
@@ -39,7 +39,6 @@
                                         {{ page.props.auth.user.name }} <span class="caret"></span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <!-- <a class="dropdown-item" @click.prevent="logout">Logout</a> -->
                                         <inertia-link class="dropdown-item" method="POST" href="/logout">Logout</inertia-link>
                                     </div>
                                 </li>
